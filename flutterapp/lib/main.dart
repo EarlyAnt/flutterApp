@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'utils/dio/dioUtils.dart';
 
 void main() {
   runApp(MyApp());
@@ -64,14 +65,36 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _getHttp() async {
-    try {
-      print("<><main.dart#_getHttp>Info: enter");
-      Response response = await Dio().get("http://www.baidu.com");
-      print(response);
-    } catch (e) {
-      print("<><main.dart#_getHttp>Error: " + e);
-    }
+  // void _getHttp() async {
+  //   try {
+  //     print("<><main.dart#_getHttp>Info: enter");
+  //     Response response = await Dio().get("http://www.baidu.com");
+  //     print(response);
+  //   } catch (e) {
+  //     print("<><main.dart#_getHttp>Error: " + e);
+  //   }
+  // }
+
+  Future _login() {
+    Map<String, String> head = {};
+    Map<String, String> body = {
+      'email': '54763755@qq.com',
+      'password': 'bobo123456'
+    };
+
+    DioUtils.postHttp(
+      'https://m.api.gululu-a.com:9443/api/v1/m/user/login',
+      parameters: body,
+      onSuccess: (data) {
+        print(data);
+        Fluttertoast.showToast(msg: "登陆成功");
+      },
+      onError: (errorText) {
+        //Toast.show(errorText);
+        print(errorText);
+        Fluttertoast.showToast(msg: "登陆失败", textColor: Colors.red);
+      },
+    );
   }
 
   @override
@@ -120,7 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         // onPressed: _incrementCounter,
-        onPressed: _getHttp,
+        // onPressed: _getHttp,
+        onPressed: _login,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
