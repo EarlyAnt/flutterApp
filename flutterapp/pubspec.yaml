@@ -24,8 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  fluttertoast: ^2.1.1
-
   # http plugins
   dio: ^3.0.9
 
