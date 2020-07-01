@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',//初始化时加载默认路由
+      initialRoute: 'xd',//初始化时加载默认路由
       onGenerateRoute: onGenerateRoute,
     );
   }
