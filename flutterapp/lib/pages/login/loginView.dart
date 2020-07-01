@@ -21,8 +21,12 @@ class _LoginViewState extends State<LoginView> {
         appBar: AppBar(
           title: Text('登录', textAlign: TextAlign.center),
         ),
-        body: Padding(
-          padding: EdgeInsets.all(20),
+        body: Container(
+          padding: EdgeInsets.fromLTRB(0.0, 0.0, 12.0, 0.0),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/b1.jpg'),
+                  fit: BoxFit.cover)),
           child: Column(
             children: <Widget>[
               Row(
@@ -32,9 +36,8 @@ class _LoginViewState extends State<LoginView> {
                   Expanded(
                     flex: 1,
                     //child: Icon(Icons.home, size: 28),
-                    child: Image.file(
-                      File(
-                          '/Users/gaobo/FlutterPractice/flutterApp/flutterapp/lib/assets/images/user.png'),
+                    child: Image.asset(
+                      "assets/images/user.png",
                       width: 28.0,
                       height: 28.0,
                     ),
@@ -42,9 +45,12 @@ class _LoginViewState extends State<LoginView> {
                   Expanded(
                     flex: 8,
                     child: TextField(
-                      decoration: InputDecoration(hintText: '请输入用户名'),
+                      decoration: InputDecoration(
+                          hintText: '请输入用户名',
+                          hintStyle: TextStyle(color: Colors.white60)),
                       maxLines: 1,
                       maxLength: 20,
+                      style: TextStyle(color: Colors.white),
                       controller: _userName,
                     ),
                     // ),
@@ -56,9 +62,8 @@ class _LoginViewState extends State<LoginView> {
                   Expanded(
                     flex: 1,
                     // child: Icon(Icons.pages, size: 28),
-                    child: Image.file(
-                      File(
-                          '/Users/gaobo/FlutterPractice/flutterApp/flutterapp/lib/assets/images/password.png'),
+                    child: Image.asset(
+                      "assets/images/password.png",
                       width: 28.0,
                       height: 28.0,
                     ),
@@ -66,9 +71,12 @@ class _LoginViewState extends State<LoginView> {
                   Expanded(
                     flex: 8,
                     child: TextField(
-                      decoration: InputDecoration(hintText: '请输入密码'),
+                      decoration: InputDecoration(
+                          hintText: '请输入密码',
+                          hintStyle: TextStyle(color: Colors.white60)),
                       maxLines: 1,
                       maxLength: 20,
+                      style: TextStyle(color: Colors.white),
                       controller: _password,
                     ),
                   ),
