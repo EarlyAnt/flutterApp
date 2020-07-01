@@ -22,13 +22,20 @@ class _LoginViewState extends State<LoginView> {
           title: Text('登录', textAlign: TextAlign.center),
         ),
         body: Container(
-          padding: EdgeInsets.fromLTRB(0.0, 0.0, 12.0, 0.0),
+          padding: EdgeInsets.fromLTRB(0.0, 80.0, 12.0, 0.0),
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/images/b1.jpg'),
                   fit: BoxFit.cover)),
           child: Column(
             children: <Widget>[
+              Image.asset(
+                'assets/images/jingyu.jpg',
+                width: 200.0,
+                height: 200.0,
+                fit: BoxFit.fill,
+              ),
+              SizedBox(height: 20.0),
               Row(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 // crossAxisAlignment: CrossAxisAlignment.start,
