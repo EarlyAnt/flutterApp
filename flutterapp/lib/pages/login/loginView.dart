@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutterapp/utils/dio/dioUtils.dart';
 
@@ -23,17 +25,54 @@ class _LoginViewState extends State<LoginView> {
           padding: EdgeInsets.all(20),
           child: Column(
             children: <Widget>[
-              TextField(
-                decoration: InputDecoration(hintText: '请输入用户名'),
-                maxLines: 1,
-                maxLength: 20,
-                controller: _userName,
+              Row(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    //child: Icon(Icons.home, size: 28),
+                    child: Image.file(
+                      File(
+                          '/Users/gaobo/FlutterPractice/flutterApp/flutterapp/lib/assets/images/user.png'),
+                      width: 28.0,
+                      height: 28.0,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: TextField(
+                      decoration: InputDecoration(hintText: '请输入用户名'),
+                      maxLines: 1,
+                      maxLength: 20,
+                      controller: _userName,
+                    ),
+                    // ),
+                  ),
+                ],
               ),
-              TextField(
-                decoration: InputDecoration(hintText: '请输入密码'),
-                maxLines: 1,
-                maxLength: 20,
-                controller: _password,
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    // child: Icon(Icons.pages, size: 28),
+                    child: Image.file(
+                      File(
+                          '/Users/gaobo/FlutterPractice/flutterApp/flutterapp/lib/assets/images/password.png'),
+                      width: 28.0,
+                      height: 28.0,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: TextField(
+                      decoration: InputDecoration(hintText: '请输入密码'),
+                      maxLines: 1,
+                      maxLength: 20,
+                      controller: _password,
+                    ),
+                  ),
+                ],
               ),
               FlatButton(
                 child: Text('登陆'),
