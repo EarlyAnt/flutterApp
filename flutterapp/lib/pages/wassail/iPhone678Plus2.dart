@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/specific_rect_clip.dart';
 
-class iPhone678Plus2 extends StatelessWidget {
-  iPhone678Plus2({
+class IPhone678Plus2 extends StatelessWidget {
+  IPhone678Plus2({
     Key key,
   }) : super(key: key);
   @override

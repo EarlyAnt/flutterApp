@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
-class iPhone678Plus1 extends StatelessWidget {
-  iPhone678Plus1({
+class IPhone678Plus1 extends StatelessWidget {
+  IPhone678Plus1({
     Key key,
   }) : super(key: key);
   @override

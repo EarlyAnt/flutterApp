@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/pages/login/loginView.dart';
 
 import 'homePage.dart';
 import 'pages/adobe_xd/adobe_xd0.dart';
@@ -10,10 +11,11 @@ final routes = {
   // '/': (context) => LoginView(),
   '/': (context) => HomePage(),
   'homePage': (context) => HomePage(),
+  'login': (context) => LoginView(),
   'xd': (context) => IPhoneXXS11Pro1(),
-  'p1': (context) => iPhone678Plus1(),
-  'p2': (context) => iPhone678Plus2(),
-  'p3': (context) => iPhone678Plus3(),
+  'p1': (context) => IPhone678Plus1(),
+  'p2': (context) => IPhone678Plus2(),
+  'p3': (context) => IPhone678Plus3(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {
