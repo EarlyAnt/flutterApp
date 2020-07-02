@@ -9,8 +9,8 @@ import 'pages/wassail/iPhone678Plus3.dart';
 
 final routes = {
   // '/': (context) => LoginView(),
-  '/': (context) => HomePage(),
-  'homePage': (context) => HomePage(),
+  // '/': (context) => HomePage(),
+  'homePage': (context) => HomePageView(),
   'login': (context) => LoginView(),
   'xd': (context) => IPhoneXXS11Pro1(),
   'p1': (context) => IPhone678Plus1(),
