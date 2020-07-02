@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SettingPage extends StatefulWidget {
-  SettingPage({Key key}) : super(key: key);
+class Setting extends StatefulWidget {
+  Setting({Key key}) : super(key: key);
 
-  _SettingPageState createState() => _SettingPageState();
+  _SettingState createState() => _SettingState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Column(
