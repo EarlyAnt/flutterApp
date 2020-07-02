@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/routes.dart';
-import 'routes.dart';
+import 'routes/Routes.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
-
+void main() => runApp(MyApp());
+class MyApp extends StatelessWidget {  
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',//初始化时加载默认路由
+      debugShowCheckedModeBanner:false ,  //去掉debug图标
+      // home:Tabs(),   
+      initialRoute: '/',     //初始化的时候加载的路由
       onGenerateRoute: onGenerateRoute,
     );
   }
