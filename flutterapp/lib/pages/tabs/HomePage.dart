@@ -3,38 +3,41 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
-        length: choices.length,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: TabBar(
-                    isScrollable: true,
-                    tabs: choices.map((Choice choice) {
-                      return Tab(
-                        text: choice.title,
-                        icon: Icon(choice.icon),
-                      );
-                    }).toList(),
+    return DefaultTabController(
+      length: choices.length,
+      child: Scaffold(
+        appBar: PreferredSize(
+          child: AppBar(
+            bottom: PreferredSize(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: TabBar(
+                      isScrollable: true,
+                      unselectedLabelColor: Colors.white54,
+                      tabs: choices.map((Choice choice) {
+                        return Tab(
+                          text: choice.title,
+                          icon: Icon(choice.icon),
+                        );
+                      }).toList(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              preferredSize: Size.fromHeight(30),
             ),
           ),
-          body: TabBarView(
-            children: choices.map((Choice choice) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ChoiceCard(choice: choice),
-              );
-            }).toList(),
-          ),
+          preferredSize: Size.fromHeight(75),
+        ),
+        body: TabBarView(
+          children: choices.map((Choice choice) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ChoiceCard(choice: choice),
+            );
+          }).toList(),
         ),
       ),
     );
