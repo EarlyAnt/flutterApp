@@ -100,6 +100,7 @@ const List<Choice> dishes = const <Choice>[
   const Choice(title: '饭盒13', icon: Icons.fastfood),
   const Choice(title: '饭盒14', icon: Icons.book),
   const Choice(title: '饭盒15', icon: Icons.cloud),
+  const Choice(title: '添加新饭盒', icon: Icons.add),
 ];
 
 class DishCard extends StatelessWidget {
@@ -110,34 +111,37 @@ class DishCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.headline4;
-    return Card(
-      color: Colors.lightBlue[50],
-      child: Center(
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: Icon(choice.icon, size: 64),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(choice.title),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                width: 18.0,
-                height: 18.0,
-                child: CircleAvatar(
-                  backgroundColor: _getColor(),
-                  child: Text(
-                    Random().nextInt(10).toString(),
-                    style: TextStyle(fontSize: 12, color: Colors.white),
+    return GestureDetector(
+      onTap: () => print(choice.title),
+      child: Card(
+        color: Colors.lightBlue[50],
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: Icon(choice.icon, size: 64, color: Colors.black54),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(choice.title),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 18.0,
+                  height: 18.0,
+                  child: CircleAvatar(
+                    backgroundColor: _getColor(),
+                    child: Text(
+                      Random().nextInt(10).toString(),
+                      style: TextStyle(fontSize: 12, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
