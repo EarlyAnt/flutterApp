@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../pages/Tabs.dart';
-
 import '../pages/Button.dart';
-
 import '../pages/TextField.dart';
-
 import '../pages/CheckBox.dart';
-
 import '../pages/Radio.dart';
+import '../pages/tabs/Scan.dart';
 
 //配置路由
 final routes = {
@@ -17,6 +14,7 @@ final routes = {
   '/textField': (context) => TextFieldDemoPage(),
   '/checkBox': (context) => CheckBoxDemo(),
   '/radio': (context) => RadioDemo(),
+  '/scan': (context) => CustomDialog(),
 };
 
 //固定写法

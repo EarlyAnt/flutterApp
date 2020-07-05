@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'Scan.dart';
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -108,11 +110,26 @@ class DishCard extends StatelessWidget {
 
   final Choice choice;
 
+  Widget _buildDialog() => Dialog(
+        backgroundColor: Colors.white,
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        child: Container(
+          width: 50,
+          child: DeleteDialog(),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.headline4;
     return GestureDetector(
-      onTap: () => print(choice.title),
+      onTap: () {
+        print(choice.title);
+        //Navigator.of(context).pushNamed('/scan');
+        showDialog(context: context, builder: (ctx) => _buildDialog());
+      },
       child: Card(
         color: Colors.lightBlue[50],
         child: Center(
