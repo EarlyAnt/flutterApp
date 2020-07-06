@@ -117,7 +117,7 @@ class DishCard extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Container(
           width: 50,
-          child: DeleteDialog(),
+          child: ScanDialog(),
         ),
       );
 
