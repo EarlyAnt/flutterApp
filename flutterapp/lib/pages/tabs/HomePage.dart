@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'Scan.dart';
+import 'Register.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -48,11 +49,11 @@ class HomePage extends StatelessWidget {
 }
 
 class Choice {
-  const Choice({this.title, this.icon, this.button});
+  const Choice({this.title, this.icon, this.scanButton});
 
   final String title;
   final IconData icon;
-  final bool button;
+  final bool scanButton;
 }
 
 const List<Choice> choices = const <Choice>[
@@ -108,7 +109,7 @@ List<Choice> dishes = <Choice>[
   const Choice(title: '饭盒4', icon: Icons.fastfood),
   const Choice(title: '饭盒5', icon: Icons.book),
   const Choice(title: '饭盒6', icon: Icons.cloud),
-  const Choice(title: '添加新饭盒', icon: Icons.add, button: true),
+  const Choice(title: '添加新饭盒', icon: Icons.add, scanButton: true),
 ];
 
 class DishCard extends StatelessWidget {
@@ -117,7 +118,7 @@ class DishCard extends StatelessWidget {
   final Choice choice;
   final Function callback;
 
-  Widget _buildDialog() => Dialog(
+  Widget _buildScanDialog() => Dialog(
         backgroundColor: Colors.white,
         elevation: 5,
         shape: RoundedRectangleBorder(
@@ -128,13 +129,32 @@ class DishCard extends StatelessWidget {
         ),
       );
 
-  Future _showDialog(BuildContext context) async {
-    await showDialog(context: context, builder: (ctx) => _buildDialog())
-        .then((value) => {
-              print('result: ' + value.toString()),
-              if (value == true && callback != null) callback()
-            });
-    // if (this.callback != null) this.callback();
+  Widget _buildRegisterDialog(Choice choice) => Dialog(
+        backgroundColor: Colors.white,
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        child: Container(
+          width: 50,
+          child: RegisterDialog(choice: choice),
+        ),
+      );
+
+  Future _showDialog(BuildContext context, bool scan, Choice choice) async {
+    if (scan) {
+      await showDialog(context: context, builder: (ctx) => _buildScanDialog())
+          .then((value) => {
+                print('result: ' + value.toString()),
+                if (value == true && callback != null) callback()
+              });
+    } else {
+      await showDialog(
+              context: context, builder: (ctx) => _buildRegisterDialog(choice))
+          .then((value) => {
+                print('result: ' + value.toString()),
+                if (value == true && callback != null) callback()
+              });
+    }
   }
 
   @override
@@ -143,7 +163,7 @@ class DishCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         print(choice.title);
-        if (choice.button == true) this._showDialog(context);
+        this._showDialog(context, choice.scanButton == true, choice);
       },
       child: Card(
         color: Colors.lightBlue[50],
@@ -159,7 +179,7 @@ class DishCard extends StatelessWidget {
                 child: Text(choice.title),
               ),
               Visibility(
-                visible: choice.button != true,
+                visible: choice.scanButton != true,
                 child: Align(
                   alignment: Alignment.topRight,
                   child: Container(
