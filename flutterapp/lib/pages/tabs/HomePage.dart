@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'Scan.dart';
-import 'Register.dart';
+import 'Edit.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -103,7 +103,10 @@ class _ChoiceCardState extends State<ChoiceCard> {
     setState(() {
       print("_updateItem: " + choice.title);
       Choice dish = dishes.firstWhere((element) => element.id == choice.id);
-      if (dish != null) dish.title = choice.title;
+      if (dish != null)
+        dish.title = choice != null || choice.title.isEmpty
+            ? choice.title
+            : '饭盒' + dishes.length.toString();
     });
   }
 }
@@ -136,28 +139,31 @@ class DishCard extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Container(
           width: 50,
-          child: RegisterDialog(choice: choice),
+          child: EditDialog(choice: choice),
         ),
       );
 
   Future _showDialog(BuildContext context, bool scan, Choice choice) async {
     if (scan) {
       await showDialog(
-              context: context, builder: (ctx) => _buildScanDialog(choice))
-          .then((value) => {
-                print('_buildScanDialog->result: ' + (value as Choice).title),
-                if (value != null && scanCallback != null)
-                  scanCallback(value as Choice)
-              });
+          context: context,
+          builder: (ctx) => _buildScanDialog(choice)).then((value) {
+        if (value != null) {
+          print('_buildScanDialog->result: ' + (value as Choice).title);
+          if (value != null && scanCallback != null)
+            scanCallback(value as Choice);
+        }
+      });
     } else {
       await showDialog(
-              context: context, builder: (ctx) => _buildRegisterDialog(choice))
-          .then((value) => {
-                print(
-                    '_buildRegisterDialog->result: ' + (value as Choice).title),
-                if (value != null && editCallback != null)
-                  editCallback(value as Choice)
-              });
+          context: context,
+          builder: (ctx) => _buildRegisterDialog(choice)).then((value) {
+        if (value != null) {
+          print('_buildRegisterDialog->result: ' + (value as Choice).title);
+          if (value != null && editCallback != null)
+            editCallback(value as Choice);
+        }
+      });
     }
   }
 

@@ -5,21 +5,21 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'HomePage.dart';
 
-class RegisterStatus {
+class EditStates {
   static final String Start = "start";
   static final String Next = "next";
 }
 
-class RegisterDialog extends StatefulWidget {
-  RegisterDialog({Key key, this.choice}) : super(key: key);
+class EditDialog extends StatefulWidget {
+  EditDialog({Key key, this.choice}) : super(key: key);
   final Choice choice;
 
   @override
-  _RegisterDialogState createState() => _RegisterDialogState();
+  _EditDialogState createState() => _EditDialogState();
 }
 
-class _RegisterDialogState extends State<RegisterDialog> {
-  String _scanState = RegisterStatus.Start;
+class _EditDialogState extends State<EditDialog> {
+  String _editState = EditStates.Start;
   Timer _timer;
   int _countdownTime = 3;
   TextEditingController _nameController = new TextEditingController();
@@ -40,11 +40,11 @@ class _RegisterDialogState extends State<RegisterDialog> {
           _buildBar(context),
           _buildTitle(),
           Visibility(
-            visible: _scanState == RegisterStatus.Start,
+            visible: _editState == EditStates.Start,
             child: _buildRegisterStart(context),
           ),
           Visibility(
-            visible: _scanState == RegisterStatus.Next,
+            visible: _editState == EditStates.Next,
             child: _buildRegisterNext(context),
           ),
         ],
@@ -127,8 +127,8 @@ class _RegisterDialogState extends State<RegisterDialog> {
           GestureDetector(
             onTap: () {
               setState(() {
-                if (this._scanState == RegisterStatus.Start)
-                  this._scanState = RegisterStatus.Next;
+                if (this._editState == EditStates.Start)
+                  this._editState = EditStates.Next;
               });
             },
             child: Container(

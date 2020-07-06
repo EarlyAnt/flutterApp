@@ -35,7 +35,7 @@ class _ScanDialogState extends State<ScanDialog> {
   String _scanState = ScanStates.Start;
   String _registerState = RegisterStates.Start;
   Timer _timer;
-  int _countdownTime = 3;
+  int _countdownTime = Random().nextInt(3);
   TextEditingController _nameController = new TextEditingController();
   String _title = "";
   var _isSelected = [
