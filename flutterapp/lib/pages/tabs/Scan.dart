@@ -126,7 +126,7 @@ class _ScanDialogState extends State<ScanDialog> {
           GestureDetector(
             onTap: () {
               setState(() {
-                this.startCountdownTimer(() => Navigator.of(context).pop());
+                this.startCountdownTimer(() => Navigator.of(context).pop(true));
                 if (this._scanState == ScanStates.Start)
                   this._scanState = ScanStates.Doing;
               });

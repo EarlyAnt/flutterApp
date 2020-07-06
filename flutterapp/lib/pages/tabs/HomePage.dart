@@ -108,15 +108,6 @@ List<Choice> dishes = <Choice>[
   const Choice(title: '饭盒4', icon: Icons.fastfood),
   const Choice(title: '饭盒5', icon: Icons.book),
   const Choice(title: '饭盒6', icon: Icons.cloud),
-  const Choice(title: '饭盒7', icon: Icons.fastfood),
-  const Choice(title: '饭盒8', icon: Icons.book),
-  const Choice(title: '饭盒9', icon: Icons.cloud),
-  const Choice(title: '饭盒10', icon: Icons.fastfood),
-  const Choice(title: '饭盒11', icon: Icons.book),
-  const Choice(title: '饭盒12', icon: Icons.cloud),
-  const Choice(title: '饭盒13', icon: Icons.fastfood),
-  const Choice(title: '饭盒14', icon: Icons.book),
-  const Choice(title: '饭盒15', icon: Icons.cloud),
   const Choice(title: '添加新饭盒', icon: Icons.add, button: true),
 ];
 
@@ -138,8 +129,12 @@ class DishCard extends StatelessWidget {
       );
 
   Future _showDialog(BuildContext context) async {
-    await showDialog(context: context, builder: (ctx) => _buildDialog());
-    if (this.callback != null) this.callback();
+    await showDialog(context: context, builder: (ctx) => _buildDialog())
+        .then((value) => {
+              print('result: ' + value.toString()),
+              if (value == true && callback != null) callback()
+            });
+    // if (this.callback != null) this.callback();
   }
 
   @override
@@ -163,16 +158,19 @@ class DishCard extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Text(choice.title),
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 18.0,
-                  height: 18.0,
-                  child: CircleAvatar(
-                    backgroundColor: _getColor(),
-                    child: Text(
-                      Random().nextInt(10).toString(),
-                      style: TextStyle(fontSize: 12, color: Colors.white),
+              Visibility(
+                visible: choice.button != true,
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 18.0,
+                    height: 18.0,
+                    child: CircleAvatar(
+                      backgroundColor: _getColor(),
+                      child: Text(
+                        Random().nextInt(10).toString(),
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
