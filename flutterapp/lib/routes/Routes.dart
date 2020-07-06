@@ -14,7 +14,7 @@ final routes = {
   '/textField': (context) => TextFieldDemoPage(),
   '/checkBox': (context) => CheckBoxDemo(),
   '/radio': (context) => RadioDemo(),
-  '/scan': (context) => CustomDialog(),
+  '/scan': (context) => ScanDialog(),
 };
 
 //固定写法

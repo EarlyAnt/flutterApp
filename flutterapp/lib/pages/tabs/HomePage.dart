@@ -48,19 +48,6 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class Choice {
-  const Choice({this.title, this.icon, this.scanButton});
-
-  final String title;
-  final IconData icon;
-  final bool scanButton;
-}
-
-const List<Choice> choices = const <Choice>[
-  const Choice(title: '我的饭盒', icon: Icons.fastfood),
-  const Choice(title: '菜谱', icon: Icons.book),
-];
-
 class ChoiceCard extends StatefulWidget {
   ChoiceCard({Key key}) : super(key: key);
 
@@ -83,9 +70,14 @@ class _ChoiceCardState extends State<ChoiceCard> {
             childAspectRatio: 0.9,
           ),
           children: dishes.map((dish) {
+            print("create dish: " +
+                dish.title +
+                " count: " +
+                dishes.length.toString());
             return DishCard(
               choice: dish,
-              callback: this._refresh,
+              scanCallback: this._addNewItem,
+              editCallback: this._updateItem,
             );
           }).toList(),
         ),
@@ -93,39 +85,47 @@ class _ChoiceCardState extends State<ChoiceCard> {
     );
   }
 
-  _refresh() {
+  _addNewItem(Choice choice) {
     setState(() {
-      print("1 2 3 4 5 6");
-      dishes.insert(dishes.length - 1,
-          Choice(title: '饭盒' + dishes.length.toString(), icon: Icons.fastfood));
+      print("_addNewItem: " + choice.title);
+      dishes.insert(
+          dishes.length - 1,
+          Choice(
+              id: dishes.length + 1,
+              title: choice != null || choice.title.isEmpty
+                  ? choice.title
+                  : '饭盒' + dishes.length.toString(),
+              icon: Icons.fastfood));
+    });
+  }
+
+  _updateItem(Choice choice) {
+    setState(() {
+      print("_updateItem: " + choice.title);
+      Choice dish = dishes.firstWhere((element) => element.id == choice.id);
+      if (dish != null) dish.title = choice.title;
     });
   }
 }
 
-List<Choice> dishes = <Choice>[
-  const Choice(title: '饭盒1', icon: Icons.fastfood),
-  const Choice(title: '饭盒2', icon: Icons.book),
-  const Choice(title: '饭盒3', icon: Icons.cloud),
-  const Choice(title: '饭盒4', icon: Icons.fastfood),
-  const Choice(title: '饭盒5', icon: Icons.book),
-  const Choice(title: '饭盒6', icon: Icons.cloud),
-  const Choice(title: '添加新饭盒', icon: Icons.add, scanButton: true),
-];
-
 class DishCard extends StatelessWidget {
-  const DishCard({Key key, this.choice, this.callback}) : super(key: key);
+  const DishCard({Key key, this.choice, this.scanCallback, this.editCallback})
+      : super(key: key);
 
   final Choice choice;
-  final Function callback;
+  final ScanCallback scanCallback;
+  final RegisterCallback editCallback;
 
-  Widget _buildScanDialog() => Dialog(
+  Widget _buildScanDialog(Choice choice) => Dialog(
         backgroundColor: Colors.white,
         elevation: 5,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Container(
           width: 50,
-          child: ScanDialog(),
+          child: ScanDialog(
+            choice: choice,
+          ),
         ),
       );
 
@@ -142,17 +142,21 @@ class DishCard extends StatelessWidget {
 
   Future _showDialog(BuildContext context, bool scan, Choice choice) async {
     if (scan) {
-      await showDialog(context: context, builder: (ctx) => _buildScanDialog())
+      await showDialog(
+              context: context, builder: (ctx) => _buildScanDialog(choice))
           .then((value) => {
-                print('result: ' + value.toString()),
-                if (value == true && callback != null) callback()
+                print('_buildScanDialog->result: ' + (value as Choice).title),
+                if (value != null && scanCallback != null)
+                  scanCallback(value as Choice)
               });
     } else {
       await showDialog(
               context: context, builder: (ctx) => _buildRegisterDialog(choice))
           .then((value) => {
-                print('result: ' + value.toString()),
-                if (value == true && callback != null) callback()
+                print(
+                    '_buildRegisterDialog->result: ' + (value as Choice).title),
+                if (value != null && editCallback != null)
+                  editCallback(value as Choice)
               });
     }
   }
@@ -212,3 +216,30 @@ Color _getColor() {
   else
     return Colors.green[300];
 }
+
+class Choice {
+  Choice({this.id, this.title, this.icon, this.scanButton});
+
+  final int id;
+  final IconData icon;
+  final bool scanButton;
+  String title;
+}
+
+List<Choice> choices = <Choice>[
+  Choice(title: '我的饭盒', icon: Icons.fastfood),
+  Choice(title: '菜谱', icon: Icons.book),
+];
+
+List<Choice> dishes = <Choice>[
+  Choice(id: 1, title: '饭盒1', icon: Icons.fastfood),
+  Choice(id: 2, title: '饭盒2', icon: Icons.book),
+  Choice(id: 3, title: '饭盒3', icon: Icons.cloud),
+  Choice(id: 4, title: '饭盒4', icon: Icons.fastfood),
+  Choice(id: 5, title: '饭盒5', icon: Icons.book),
+  Choice(id: 6, title: '饭盒6', icon: Icons.cloud),
+  Choice(id: 7, title: '添加新饭盒', icon: Icons.add, scanButton: true),
+];
+
+typedef ScanCallback = void Function(Choice choice);
+typedef RegisterCallback = void Function(Choice choice);

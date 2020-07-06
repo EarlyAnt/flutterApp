@@ -23,6 +23,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
   Timer _timer;
   int _countdownTime = 3;
   TextEditingController _nameController = new TextEditingController();
+  String _title = "";
   var _isSelected = [
     true,
     false,
@@ -31,6 +32,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
 
   @override
   Widget build(BuildContext context) {
+    _nameController.text = widget.choice.title;
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -39,11 +41,11 @@ class _RegisterDialogState extends State<RegisterDialog> {
           _buildTitle(),
           Visibility(
             visible: _scanState == RegisterStatus.Start,
-            child: _buildStartFooter(context),
+            child: _buildRegisterStart(context),
           ),
           Visibility(
             visible: _scanState == RegisterStatus.Next,
-            child: _buildNextFooter(context),
+            child: _buildRegisterNext(context),
           ),
         ],
       ),
@@ -73,7 +75,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
     return timestamp;
   }
 
-  Widget _buildStartFooter(context) {
+  Widget _buildRegisterStart(context) {
     return Padding(
       padding:
           const EdgeInsets.only(bottom: 15.0, top: 10, left: 10, right: 10),
@@ -101,6 +103,10 @@ class _RegisterDialogState extends State<RegisterDialog> {
           TextField(
             controller: _nameController,
             decoration: InputDecoration(hintText: '输入菜名'),
+            onChanged: (value) {
+              _title = value;
+              print("_title: ${_title}");
+            },
           ),
           SizedBox(height: 10.0),
           ToggleButtons(
@@ -141,7 +147,7 @@ class _RegisterDialogState extends State<RegisterDialog> {
     );
   }
 
-  Widget _buildNextFooter(context) {
+  Widget _buildRegisterNext(context) {
     return Padding(
       padding:
           const EdgeInsets.only(bottom: 15.0, top: 10, left: 10, right: 10),
@@ -165,18 +171,19 @@ class _RegisterDialogState extends State<RegisterDialog> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                CupertinoButton(
-                  child: Text('Next'),
+                FlatButton(
+                  child: Text('Next', style: TextStyle(color: Colors.white)),
+                  color: Colors.blue,
                   onPressed: () {
-                    // this.startCountdownTimer(() => Navigator.of(context).pop(true));
-                    Navigator.of(context).pop(true);
+                    //Todo: 显示Toast提示
                   },
                 ),
-                CupertinoButton(
-                  child: Text('Exit'),
+                FlatButton(
+                  child: Text('Exit', style: TextStyle(color: Colors.white)),
+                  color: Colors.orange,
                   onPressed: () {
-                    // this.startCountdownTimer(() => Navigator.of(context).pop());
-                    Navigator.of(context).pop();
+                    widget.choice.title = _title;
+                    Navigator.of(context).pop(widget.choice);
                   },
                 ),
               ],
