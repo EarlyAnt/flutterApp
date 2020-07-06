@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class CustomDialog extends StatelessWidget {
   @override
@@ -50,6 +51,8 @@ class ScanDialog extends StatefulWidget {
 
 class _ScanDialogState extends State<ScanDialog> {
   String _scanState = ScanStates.Start;
+  Timer _timer;
+  int _countdownTime = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +73,14 @@ class _ScanDialogState extends State<ScanDialog> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_timer != null) {
+      _timer.cancel();
+    }
   }
 
   Widget _buildTitle() {
@@ -115,6 +126,7 @@ class _ScanDialogState extends State<ScanDialog> {
           GestureDetector(
             onTap: () {
               setState(() {
+                this.startCountdownTimer(() => Navigator.of(context).pop());
                 if (this._scanState == ScanStates.Start)
                   this._scanState = ScanStates.Doing;
               });
@@ -167,4 +179,21 @@ class _ScanDialogState extends State<ScanDialog> {
           ),
         ),
       );
+
+  void startCountdownTimer(Function callback) {
+    const oneSec = const Duration(seconds: 1);
+    var doTimer = (timer) => {
+          setState(() {
+            if (_countdownTime < 1) {
+              _timer.cancel();
+              if (callback != null) callback();
+            } else {
+              _countdownTime = _countdownTime - 1;
+              print('...');
+            }
+          })
+        };
+
+    _timer = Timer.periodic(oneSec, doTimer);
+  }
 }
