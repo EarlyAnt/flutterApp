@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
           children: choices.map((Choice choice) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ChoiceCard(choice: choice),
+              child: ChoiceCard(),
             );
           }).toList(),
         ),
@@ -48,10 +48,11 @@ class HomePage extends StatelessWidget {
 }
 
 class Choice {
-  const Choice({this.title, this.icon});
+  const Choice({this.title, this.icon, this.button});
 
   final String title;
   final IconData icon;
+  final bool button;
 }
 
 const List<Choice> choices = const <Choice>[
@@ -59,11 +60,14 @@ const List<Choice> choices = const <Choice>[
   const Choice(title: '菜谱', icon: Icons.book),
 ];
 
-class ChoiceCard extends StatelessWidget {
-  const ChoiceCard({Key key, this.choice}) : super(key: key);
+class ChoiceCard extends StatefulWidget {
+  ChoiceCard({Key key}) : super(key: key);
 
-  final Choice choice;
+  @override
+  _ChoiceCardState createState() => _ChoiceCardState();
+}
 
+class _ChoiceCardState extends State<ChoiceCard> {
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.headline4;
@@ -78,15 +82,26 @@ class ChoiceCard extends StatelessWidget {
             childAspectRatio: 0.9,
           ),
           children: dishes.map((dish) {
-            return DishCard(choice: dish);
+            return DishCard(
+              choice: dish,
+              callback: this._refresh,
+            );
           }).toList(),
         ),
       ),
     );
   }
+
+  _refresh() {
+    setState(() {
+      print("1 2 3 4 5 6");
+      dishes.insert(dishes.length - 1,
+          Choice(title: '饭盒' + dishes.length.toString(), icon: Icons.fastfood));
+    });
+  }
 }
 
-const List<Choice> dishes = const <Choice>[
+List<Choice> dishes = <Choice>[
   const Choice(title: '饭盒1', icon: Icons.fastfood),
   const Choice(title: '饭盒2', icon: Icons.book),
   const Choice(title: '饭盒3', icon: Icons.cloud),
@@ -102,13 +117,14 @@ const List<Choice> dishes = const <Choice>[
   const Choice(title: '饭盒13', icon: Icons.fastfood),
   const Choice(title: '饭盒14', icon: Icons.book),
   const Choice(title: '饭盒15', icon: Icons.cloud),
-  const Choice(title: '添加新饭盒', icon: Icons.add),
+  const Choice(title: '添加新饭盒', icon: Icons.add, button: true),
 ];
 
 class DishCard extends StatelessWidget {
-  const DishCard({Key key, this.choice}) : super(key: key);
+  const DishCard({Key key, this.choice, this.callback}) : super(key: key);
 
   final Choice choice;
+  final Function callback;
 
   Widget _buildDialog() => Dialog(
         backgroundColor: Colors.white,
@@ -121,14 +137,18 @@ class DishCard extends StatelessWidget {
         ),
       );
 
+  Future _showDialog(BuildContext context) async {
+    await showDialog(context: context, builder: (ctx) => _buildDialog());
+    if (this.callback != null) this.callback();
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.headline4;
     return GestureDetector(
       onTap: () {
         print(choice.title);
-        //Navigator.of(context).pushNamed('/scan');
-        showDialog(context: context, builder: (ctx) => _buildDialog());
+        if (choice.button == true) this._showDialog(context);
       },
       child: Card(
         color: Colors.lightBlue[50],
