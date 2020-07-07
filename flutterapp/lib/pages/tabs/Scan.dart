@@ -1,10 +1,11 @@
 import 'dart:math';
+import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
 
-import 'HomePage.dart';
+import 'CommonDatas.dart';
 
 class Pages {
   static final String ScanPage = "scan";
@@ -281,6 +282,15 @@ class _ScanDialogState extends State<ScanDialog> {
                   color: Colors.blue,
                   onPressed: () {
                     //Todo: 显示Toast提示
+                    Fluttertoast.showToast(
+                      msg: "功能开发中...",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIos: 1,
+                      backgroundColor: Colors.blue[300],
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
                   },
                 ),
                 SizedBox(width: 10),

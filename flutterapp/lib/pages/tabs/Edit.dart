@@ -1,9 +1,11 @@
 import 'dart:math';
+import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'HomePage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'CommonDatas.dart';
 
 class EditStates {
   static final String Start = "start";
@@ -31,8 +33,14 @@ class _EditDialogState extends State<EditDialog> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     _nameController.text = widget.choice.title;
+    _title = widget.choice.title;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -176,6 +184,15 @@ class _EditDialogState extends State<EditDialog> {
                   color: Colors.blue,
                   onPressed: () {
                     //Todo: 显示Toast提示
+                    Fluttertoast.showToast(
+                      msg: "功能开发中...",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIos: 1,
+                      backgroundColor: Colors.blue[300],
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
                   },
                 ),
                 SizedBox(width: 10),

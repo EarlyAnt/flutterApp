@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'CommonDatas.dart';
 import 'Scan.dart';
 import 'Edit.dart';
 
@@ -92,7 +93,7 @@ class _ChoiceCardState extends State<ChoiceCard> {
           dishes.length - 1,
           Choice(
               id: dishes.length + 1,
-              title: choice != null || choice.title.isEmpty
+              title: choice != null && choice.title.isNotEmpty
                   ? choice.title
                   : '饭盒' + dishes.length.toString(),
               icon: Icons.fastfood));
@@ -104,7 +105,7 @@ class _ChoiceCardState extends State<ChoiceCard> {
       print("_updateItem: " + choice.title);
       Choice dish = dishes.firstWhere((element) => element.id == choice.id);
       if (dish != null)
-        dish.title = choice != null || choice.title.isEmpty
+        dish.title = choice != null && choice.title.isNotEmpty
             ? choice.title
             : '饭盒' + dishes.length.toString();
     });
@@ -222,30 +223,6 @@ Color _getColor() {
   else
     return Colors.green[300];
 }
-
-class Choice {
-  Choice({this.id, this.title, this.icon, this.scanButton});
-
-  final int id;
-  final IconData icon;
-  final bool scanButton;
-  String title;
-}
-
-List<Choice> choices = <Choice>[
-  Choice(title: '我的饭盒', icon: Icons.fastfood),
-  Choice(title: '菜谱', icon: Icons.book),
-];
-
-List<Choice> dishes = <Choice>[
-  Choice(id: 1, title: '饭盒1', icon: Icons.fastfood),
-  Choice(id: 2, title: '饭盒2', icon: Icons.book),
-  Choice(id: 3, title: '饭盒3', icon: Icons.cloud),
-  Choice(id: 4, title: '饭盒4', icon: Icons.fastfood),
-  Choice(id: 5, title: '饭盒5', icon: Icons.book),
-  Choice(id: 6, title: '饭盒6', icon: Icons.cloud),
-  Choice(id: 7, title: '添加新饭盒', icon: Icons.add, scanButton: true),
-];
 
 typedef ScanCallback = void Function(Choice choice);
 typedef RegisterCallback = void Function(Choice choice);
