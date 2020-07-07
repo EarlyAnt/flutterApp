@@ -178,6 +178,7 @@ class _EditDialogState extends State<EditDialog> {
                     //Todo: 显示Toast提示
                   },
                 ),
+                SizedBox(width: 10),
                 FlatButton(
                   child: Text('Exit', style: TextStyle(color: Colors.white)),
                   color: Colors.orange,
